@@ -10,11 +10,12 @@ let g:hound_base_url = "arbitrary.url.com"
 let g:hound_port = "6081"
 ```
 
-You can also limit which repos you search through with comma separated strings:
+You can also limit which repos you search through with (case insensitive) comma separated strings:
 
 ```vimscript
-let g:hound_repos = "etsyweb"
+let g:hound_repos = "arepo,anotherrepo,anynumberofrepos"
 ```
+
 
 I also recommend a mapping such as 
 
