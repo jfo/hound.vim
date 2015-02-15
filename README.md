@@ -3,6 +3,13 @@ hound.vim
 
 A plugin to talk to Etsy's [Hound](https://github.com/etsy/Hound) trigram search.
 
+introduces the 
+
+```
+:Hound
+```
+That takes a string and asks a hound server "like hey what's up with this string?" and presents the results in a scratch buffer.
+
 hound.vim assumes you have a server running on localhost at port 6080. If you want to hit somewhere else you can redefine either in your .vimrc:
 
 ```vimscript
@@ -23,7 +30,5 @@ I also recommend a mapping such as
 nnoremap <leader>a :Hound<space>
 ```
 for quick access.
-
-Will dump your parsed results into a scratch buffer.
 
 Please let me know of any bugs! There will be bugs!
