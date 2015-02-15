@@ -3,7 +3,7 @@ hound.vim
 
 A plugin to talk to Etsy's [Hound](https://github.com/etsy/Hound) trigram search.
 
-introduces the 
+introduces the
 
 ```
 :Hound
@@ -24,11 +24,15 @@ let g:hound_repos = "arepo,anotherrepo,anynumberofrepos"
 ```
 
 
-I also recommend a mapping such as 
+I also recommend a mapping such as
 
 ```vimscript
 nnoremap <leader>a :Hound<space>
 ```
 for quick access.
 
-Please let me know of any bugs! There will be bugs!
+This is a beta release. Please let me know of any bugs! There will be bugs!
+
+This plugin requires:
+
+[webapi-vim](https://github.com/mattn/webapi-vim) and `curl`
