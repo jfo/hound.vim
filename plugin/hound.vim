@@ -13,8 +13,8 @@ else
 endif
 
 if !exists('g:hound_verbose')
-    " defaults to false; 0 is falsy; vimscript has no booleans yay vimscript o_O
-    let g:hound_verbose=0
+    " defaults to true; 0 is falsy; vimscript has no booleans yay vimscript o_O
+    let g:hound_verbose=1
 endif
 
 function! Hound(query_string) abort
