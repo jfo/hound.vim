@@ -31,7 +31,7 @@ nnoremap <leader>a :Hound<space>
 ```
 for quick access.
 
-This is a beta release. Please let me know of any bugs! There will be bugs!
+This is a beta release. Please let me know of any bugs! There will be bugs! More docs and features and options to come.
 
 This plugin requires:
 
