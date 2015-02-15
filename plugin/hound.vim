@@ -1,22 +1,42 @@
-let g:hound_base_url="http://localhost"
-let g:hound_port="6080"
-let g:hound_repos="*"
+if !exists('g:hound_base_url')
+    let g:hound_base_url="http://127.0.0.1"
+endif
 
-let g:hound_verbose=0
-let g:hound_repos="*"
+if !exists('g:hound_port')
+    let g:hound_port="6080"
+endif
+
+if !exists('g:hound_repos')
+    let g:hound_repos="*"
+else
+    let g:hound_repos=tolower(g:hound_repos)
+endif
+
+if !exists('g:hound_verbose')
+    " defaults to false; 0 is falsy; vimscript has no booleans yay vimscript o_O
+    let g:hound_verbose=0
+endif
 
 function! Hound(query_string) abort
-
-  let s:full_url = g:hound_base_url
+  let s:api_full_url = g:hound_base_url
               \. ":" . g:hound_port
               \. '/api/v1/search?'
               \.'&repos=' . g:hound_repos
               \. '&q=' . a:query_string
 
-  let s:curl_response=system('curl -s "'.s:full_url.'"')
-  let s:response = webapi#json#decode(s:curl_response)
+  let s:web_full_url = g:hound_base_url . ':' . g:hound_port
+              \.'?repos=' . g:hound_repos
+              \. '&q=' . a:query_string . "\n\n"
 
-  let s:output = s:full_url
+  let s:curl_response=system('curl -s "'.s:api_full_url.'"')
+
+  try
+      let s:response = webapi#json#decode(s:curl_response)
+  catch
+      echoerr "Hound could not connect to " . g:hound_base_url . ":" . g:hound_port
+  endtry
+
+  let s:output = s:web_full_url
 
   let repos = []
   for tuple in items(s:response["Results"])
@@ -42,11 +62,27 @@ function! Hound(query_string) abort
       endfor
   endfor
 
-  :redir! @a | silent echo s:output | redir END |
-  :enew | normal "apgg2ddGddgg
-  :setlocal nowrap
+  if (s:output == s:web_full_url)
+      echo "Nothing for you, Dawg"
+  else
+      if (bufwinnr("__Hound_Results__") > 0)
+          :edit __Hound_Results__
+      else
+          :vsplit __Hound_Results__
+      endif
 
+      normal! ggdG
+      setlocal filetype=houndresults | setlocal buftype=nofile | setlocal nowrap
+      call append(0, split(s:output, '\n'))
+      normal! gg
+
+      exec 'syntax match queryString "'.a:query_string.'"'
+      highlight link queryString DiffAdd
+
+      syntax match FilePath "^.*\(\n-----\)\@="
+      highlight link FilePath Special
+
+  endif
 endfunction
 
 command! -nargs=1 Hound call Hound(<f-args>)
-" nnoremap <LEADER>* yiw exec "Hound " . @= <CR>
