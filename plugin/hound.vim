@@ -68,7 +68,7 @@ function! Hound(query_string) abort
       if (bufwinnr("__Hound_Results__") > 0)
           :edit __Hound_Results__
       else
-          :vsplit __Hound_Results__
+          :enew "__Hound_Results__"
       endif
 
       normal! ggdG
