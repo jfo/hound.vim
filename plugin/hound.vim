@@ -9,7 +9,7 @@ endif
 if !exists('g:hound_repos')
     let g:hound_repos="*"
 else
-    let g:hound_repos=tolower(g:hound_repos)
+    let g:hound_repos=substitute(tolower(g:hound_repos), " ","","g")
 endif
 
 if !exists('g:hound_verbose')
