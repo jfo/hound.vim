@@ -20,9 +20,7 @@ endif
 function! Hound(...) abort
 
   let a:query_string = join(a:000)
-
   let sanitized_query_string = substitute(a:query_string, " ", '%20', "g")
-  echo sanitized_query_string
 
   let s:api_full_url = g:hound_base_url
               \. ":" . g:hound_port
