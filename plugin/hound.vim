@@ -23,19 +23,6 @@ function! hound#encodeUrl(string) abort
     return substitute(a:string, mask, '\=printf("%%%x", char2nr(submatch(0)))', 'g')
 endfunction
 
-" function! xolox#misc#path#encode(path) " {{{1
-"   " Encode a pathname so it can be used as a filename. This uses URL encoding
-"   " to encode special characters.
-"   if s:windows_compatible
-"     let mask = '[*|\\/:"<>?%]'
-"   elseif xolox#misc#os#is_mac()
-"     let mask = '[\\/%:]'
-"   else
-"     let mask = '[\\/%]'
-"   endif
-"   return substitute(a:path, mask, '\=printf("%%%x", char2nr(submatch(0)))', 'g')
-" endfunction
-
 function! Hound(...) abort
 
   let a:query_string = join(a:000)
