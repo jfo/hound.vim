@@ -17,10 +17,29 @@ if !exists('g:hound_verbose')
     let g:hound_verbose=1
 endif
 
+
+function! hound#encodeUrl(string) abort
+    let mask = "[ \\]'\!\#\$&(),\*\+\/:;=?@\[]"
+    return substitute(a:string, mask, '\=printf("%%%x", char2nr(submatch(0)))', 'g')
+endfunction
+
+" function! xolox#misc#path#encode(path) " {{{1
+"   " Encode a pathname so it can be used as a filename. This uses URL encoding
+"   " to encode special characters.
+"   if s:windows_compatible
+"     let mask = '[*|\\/:"<>?%]'
+"   elseif xolox#misc#os#is_mac()
+"     let mask = '[\\/%:]'
+"   else
+"     let mask = '[\\/%]'
+"   endif
+"   return substitute(a:path, mask, '\=printf("%%%x", char2nr(submatch(0)))', 'g')
+" endfunction
+
 function! Hound(...) abort
 
   let a:query_string = join(a:000)
-  let sanitized_query_string = substitute(a:query_string, " ", '%20', "g")
+  let sanitized_query_string = hound#encodeUrl(a:query_string)
 
   let s:api_full_url = g:hound_base_url
               \. ":" . g:hound_port
