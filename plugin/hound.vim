@@ -17,16 +17,22 @@ if !exists('g:hound_verbose')
     let g:hound_verbose=1
 endif
 
-function! Hound(query_string) abort
+function! Hound(...) abort
+
+  let a:query_string = join(a:000)
+
+  let sanitized_query_string = substitute(a:query_string, " ", '%20', "g")
+  echo sanitized_query_string
+
   let s:api_full_url = g:hound_base_url
               \. ":" . g:hound_port
               \. '/api/v1/search?'
               \.'&repos=' . g:hound_repos
-              \. '&q=' . a:query_string
+              \. '&q=' . sanitized_query_string
 
   let s:web_full_url = g:hound_base_url . ':' . g:hound_port
               \.'?repos=' . g:hound_repos
-              \. '&q=' . a:query_string . "\n\n"
+              \. '&q=' . sanitized_query_string . "\n\n"
 
   let s:curl_response=system('curl -s "'.s:api_full_url.'"')
 
