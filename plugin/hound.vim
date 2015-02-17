@@ -36,7 +36,7 @@ function! Hound(...) abort
 
     let s:web_full_url = g:hound_base_url . ':' . g:hound_port
                 \.'?repos=' . clean_repos
-                \. '&q=' . sanitized_query_string . "\n\n"
+                \. '&q=' . sanitized_query_string
 
     let s:curl_response=system('curl -s "'.s:api_full_url.'"')
 
@@ -52,7 +52,7 @@ function! Hound(...) abort
     end
 
 
-        let s:output = s:web_full_url
+        let s:output = s:web_full_url . "\n\n"
 
         let repos = []
         for tuple in items(s:response["Results"])
