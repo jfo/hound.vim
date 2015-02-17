@@ -68,7 +68,7 @@ function! Hound(...) abort
                                 \."\n--------------------------------------------------------------------------------\n"
                     if g:hound_verbose
                         let s:output.=join(mymatch2["Before"], "\n")
-                                    \.mymatch2["Line"] . "\n"
+                                    \. "\n" . mymatch2["Line"] . "\n"
                                     \.join(mymatch2["After"], "\n")."\n"
                     else
                         let s:output.=substitute(mymatch2["Line"], '^\s*\(.\{-}\)\s*$', '\1', '') . "\n"
