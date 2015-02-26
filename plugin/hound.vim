@@ -15,10 +15,6 @@ if !exists('g:hound_verbose')
     let g:hound_verbose=1
 endif
 
-if !exists('g:hound_results_style')
-    let g:hound_results_style="buffer"
-endif
-
 
 function! hound#encodeUrl(string) abort
     let mask = "[ \\]'\!\#\$&(),\*\+\/:;=?@\[]"
@@ -88,15 +84,7 @@ function! Hound(...) abort
             if (bufwinnr("__Hound_Results__") > 0)
                 :edit __Hound_Results__
             else
-                if (g:hound_results_style == "tab")
-                    :tabedit "__Hound_Results__"
-                elseif (g:hound_results_style == "vsplit")
-                    :vnew "__Hound_Results__"
-                elseif (g:hound_results_style == "hsplit")
-                    :split "__Hound_Results__"
-                elseif (g:hound_results_style == "buffer" || 1)
-                    :enew "__Hound_Results__"
-                endif
+                :enew "__Hound_Results__"
             endif
 
             normal! ggdG
@@ -111,5 +99,6 @@ function! Hound(...) abort
             highlight link FilePath Special
 
         endif
+    endfunction
+
     command! -nargs=1 Hound call Hound(<f-args>)
-endfunction
