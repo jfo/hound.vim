@@ -89,13 +89,13 @@ function! Hound(...) abort
                 :edit __Hound_Results__
             else
                 if (g:hound_results_style == "tab")
-                    :tabedit __Hound_Results__
+                    :tabedit "__Hound_Results__"
                 elseif (g:hound_results_style == "vsplit")
-                    :vnew __Hound_Results__
+                    :vnew "__Hound_Results__"
                 elseif (g:hound_results_style == "hsplit")
-                    :sp __Hound_Results__
-                elseif (g:hound_results_style == "buffer")
-                    :enew __Hound_Results__
+                    :split "__Hound_Results__"
+                elseif (g:hound_results_style == "buffer" || 1)
+                    :enew "__Hound_Results__"
                 endif
             endif
 
