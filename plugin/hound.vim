@@ -86,7 +86,7 @@ function! Hound(...) abort
         else
             if (bufwinnr("__Hound_Results__") > 0)
                 if g:hound_vertical_split
-                    :ve __Hound_Results__
+                    :vs __Hound_Results__
                 else
                     :edit __Hound_Results__
                 endif
