@@ -15,6 +15,9 @@ if !exists('g:hound_verbose')
     let g:hound_verbose=1
 endif
 
+if !exists('g:hound_vertical_split')
+    let g:hound_vertical_split=0
+endif
 
 function! hound#encodeUrl(string) abort
     let mask = "[ \\]'\!\#\$&(),\*\+\/:;=?@\[]"
@@ -82,9 +85,17 @@ function! Hound(...) abort
             echo "Nothing for you, Dawg"
         else
             if (bufwinnr("__Hound_Results__") > 0)
-                :edit __Hound_Results__
+                if g:hound_vertical_split
+                    :ve __Hound_Results__
+                else
+                    :edit __Hound_Results__
+                endif
             else
-                :enew "__Hound_Results__"
+                if g:hound_vertical_split
+                    :vnew "__Hound_Results__"
+                else
+                    :enew "__Hound_Results__"
+                endif
             endif
 
             normal! ggdG
