@@ -54,62 +54,53 @@ function! Hound(...) abort
         return
     end
 
+    let s:output = s:web_full_url
 
-        let s:output = s:web_full_url . "\n\n"
+    let repos = []
+    for tuple in items(s:response["Results"])
+        let repos += [tuple[0]]
+    endfor
 
-        let repos = []
-        for tuple in items(s:response["Results"])
-            let repos += [tuple[0]]
-        endfor
-
-        for repo in repos
-            let s:output .= "Repo: " . repo . "\n================================================================================\n"
-            for mymatch in s:response["Results"][repo]["Matches"]
-                for mymatch2 in mymatch["Matches"]
-                    let s:output.="\n".mymatch["Filename"]
-                                \.":".mymatch2["LineNumber"]
-                                \."\n--------------------------------------------------------------------------------\n"
-                    if g:hound_verbose
-                        let s:output.=join(mymatch2["Before"], "\n")
-                                    \. "\n" . mymatch2["Line"] . "\n"
-                                    \.join(mymatch2["After"], "\n")."\n"
-                    else
-                        let s:output.=substitute(mymatch2["Line"], '^\s*\(.\{-}\)\s*$', '\1', '') . "\n"
-                    endif
-                    let s:output.="\n"
-                endfor
+    for repo in repos
+        let s:output .= "\n\nRepo: " . repo . "\n================================================================================\n"
+        for mymatch in s:response["Results"][repo]["Matches"]
+            for mymatch2 in mymatch["Matches"]
+                let s:output.="\n".mymatch["Filename"]
+                            \.":".mymatch2["LineNumber"]
+                            \."\n--------------------------------------------------------------------------------\n"
+                if g:hound_verbose
+                    let s:output.=join(mymatch2["Before"], "\n")
+                                \. "\n" . mymatch2["Line"] . "\n"
+                                \.join(mymatch2["After"], "\n")."\n"
+                else
+                    let s:output.=substitute(mymatch2["Line"], '^\s*\(.\{-}\)\s*$', '\1', '') . "\n"
+                endif
+                let s:output.="\n"
             endfor
         endfor
+    endfor
 
-        if (s:output == s:web_full_url)
-            echo "Nothing for you, Dawg"
+    if (s:output == s:web_full_url)
+        echo "Nothing for you, Dawg"
+    else
+        if g:hound_vertical_split
+            execute ":vnew ". tempname()
         else
-            if (bufwinnr("__Hound_Results__") > 0)
-                if g:hound_vertical_split
-                    :vs __Hound_Results__
-                else
-                    :edit __Hound_Results__
-                endif
-            else
-                if g:hound_vertical_split
-                    :vnew "__Hound_Results__"
-                else
-                    :enew "__Hound_Results__"
-                endif
-            endif
-
-            normal! ggdG
-            setlocal filetype=houndresults | setlocal buftype=nofile | setlocal nowrap
-            call append(0, split(s:output, '\n'))
-            normal! gg
-
-            exec 'syntax match queryString "'.a:query_string.'"'
-            highlight link queryString DiffAdd
-
-            syntax match FilePath "^.*\(\n-----\)\@="
-            highlight link FilePath Special
-
+            execute ":edit ". tempname()
         endif
-    endfunction
 
-    command! -nargs=1 Hound call Hound(<f-args>)
+        normal! ggdG
+        setlocal filetype=houndresults | setlocal nowrap | setlocal buftype=nofile
+        call append(0, split(s:output, '\n'))
+        normal! gg
+
+        exec 'syntax match queryString "'.a:query_string.'"'
+        highlight link queryString DiffAdd
+
+        syntax match FilePath "^.*\(\n-----\)\@="
+        highlight link FilePath Special
+
+    endif
+endfunction
+
+command! -nargs=1 Hound call Hound(<f-args>)
