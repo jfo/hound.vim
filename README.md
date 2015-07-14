@@ -45,7 +45,7 @@ for quick access.
 
 If you want a vertical split instead of a new window:
 ```vimscript
-leg g:hound_vertical_split = 1
+let g:hound_vertical_split = 1
 ```
 
 This is a beta release. Please let me know of any bugs! There will be bugs! More docs and features and options to come.
