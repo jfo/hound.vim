@@ -84,15 +84,16 @@ function! Hound(...) abort
         echo "Nothing for you, Dawg"
     else
         if g:hound_vertical_split
-            execute ":vnew ". tempname()
+            execute ":vnew ". tempname() . sanitized_query_string
         else
-            execute ":edit ". tempname()
+            execute ":edit ". tempname() . sanitized_query_string
         endif
 
         normal! ggdG
         setlocal filetype=houndresults | setlocal nowrap | setlocal buftype=nofile
         call append(0, split(s:output, '\n'))
         normal! gg
+        execute ":w "
 
         exec 'syntax match queryString "'.a:query_string.'"'
         highlight link queryString DiffAdd
