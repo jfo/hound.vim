@@ -35,6 +35,11 @@ You can also limit which repos you search through with (case insensitive) comma 
 ```vimscript
 let g:hound_repos = "arepo,anotherrepo,anynumberofrepos"
 ```
+To ignore case in searches by default:
+
+```vimscript
+let g:hound_ignore_case = 1
+```
 
 I also recommend a mapping such as
 
