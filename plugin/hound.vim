@@ -19,6 +19,10 @@ if !exists('g:hound_vertical_split')
     let g:hound_vertical_split=0
 endif
 
+if !exists('g:hound_ignore_case')
+    let g:hound_ignore_case=0
+endif
+
 function! hound#encodeUrl(string) abort
     let mask = "[ \\]'\!\#\$&(),\*\+\/:;=?@\[]"
     return substitute(a:string, mask, '\=printf("%%%x", char2nr(submatch(0)))', 'g')
@@ -34,11 +38,13 @@ function! Hound(...) abort
     let s:api_full_url = g:hound_base_url
                 \. ":" . g:hound_port
                 \. '/api/v1/search?'
-                \.'&repos=' . clean_repos
+                \. '&repos=' . clean_repos
+                \. '&i=' . g:hound_ignore_case
                 \. '&q=' . sanitized_query_string
 
     let s:web_full_url = g:hound_base_url . ':' . g:hound_port
-                \.'?repos=' . clean_repos
+                \. '?repos=' . clean_repos
+                \. '&i=' . g:hound_ignore_case
                 \. '&q=' . sanitized_query_string
 
     let s:curl_response=system('curl -s "'.s:api_full_url.'"')
@@ -94,7 +100,12 @@ function! Hound(...) abort
         call append(0, split(s:output, '\n'))
         normal! gg
 
-        exec 'syntax match queryString "'.a:query_string.'"'
+        if g:hound_ignore_case == 1
+            let l:query = '\c' . a:query_string
+        else
+            let l:query = a:query_string
+        endif
+        exec 'syntax match queryString "'.l:query.'"'
         highlight link queryString DiffAdd
 
         syntax match FilePath "^.*\(\n-----\)\@="
