@@ -1,1 +1,87 @@
-I'll put docs here, I promise.
+*hound.txt* talk to Etsy's Hound trigram search.
+
+ _   _                       _  ~
+| | | | ___  _   _ _ __   __| | ~
+| |_| |/ _ \| | | | '_ \ / _` | ~
+|  _  | (_) | |_| | | | | (_| | ~
+|_| |_|\___/ \__,_|_| |_|\__,_| ~
+
+Lightning fast code searching made easy
+
+====================================================================
+CONTENTS                                            *HoundContents*
+
+    1. Usage ................ |HoundUsage|
+    2. Configuration ........ |HoundConfiguration|
+    3. Mappings ............. |HoundMappings|
+    4. Contributing ......... |HoundContributing|
+
+==============================================================================
+1. Usage                                                          *HoundUsage*
+
+The :Hound command  takes a string and asks a hound server:
+"like hey what's up with this string?" and presents the
+results in a temporary file.
+
+Use it like this: >
+
+    :Hound foo
+
+Or like this: >
+
+    :Hound foo bar baz
+
+You can also get the results in a quickfix window by running: >
+
+    :HoundQF foo
+
+QFEnter and vim-unimpaired are useful plugins that will make
+quickfix windows easier to work with.
+
+=============================================================================
+2. Configuration                                         *HoundConfiguration*
+
+hound.vim assumes you have a server running on localhost at port 6080.
+If you want to hit somewhere else you can redefine either in your .vimrc:
+
+ let g:hound_base_url = "arbitrary.url.com"
+ let g:hound_port = "6081"
+
+You can also limit which repos you search through with (case insensitive)
+comma separated strings:
+
+ let g:hound_repos = "arepo,anotherrepo,anynumberofrepos"
+
+This property is inferred if you specify g:hound_repo_paths.
+
+You can tell hound.vim where your repositories live, by specifying a lower case
+dictionary like so:
+
+ let g:hound_repo_paths = {
+    \'arepo': '/path/to/arepo',
+    \'anotherrepo': '~/path/to/anotherrepo',}
+
+To ignore case in searches by default:
+
+ let g:hound_ignore_case = 1
+
+If you want to open Hound results in a vertical split
+
+ let g:hound_vertical_split = 1
+
+=============================================================================
+3. Mappings                                                   *HoundMappings*
+
+To search the token under your cursor you can do something like: >
+
+ nnoremap <C-h> :Hound<space><C-R><C-W>
+
+or
+
+ nnoremap <C-h> :HoundQF<space><C-R><C-W>
+
+=============================================================================
+4. Contributing                                           *HoundContributing*
+
+Please report issues, feature requests and pull requests to
+https://github.com/urthbound/hound.vim

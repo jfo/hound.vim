@@ -24,6 +24,11 @@ Introduces the
 
 command, which takes a string and asks a hound server: "like hey what's up with this string?" and presents the results in a scratch buffer.
 
+You can also get the results in a quickfix window by running
+```
+HoundQF <searchterm>
+```
+
 hound.vim assumes you have a server running on localhost at port 6080. If you want to hit somewhere else you can redefine either in your .vimrc:
 
 ```vimscript
@@ -35,6 +40,15 @@ You can also limit which repos you search through with (case insensitive) comma 
 ```vimscript
 let g:hound_repos = "arepo,anotherrepo,anynumberofrepos"
 ```
+
+You can tell hound.vim where your repositories live, by specifying a lower case
+dictionary like so:
+```vimscript
+ let g:hound_repo_paths = {
+    \'arepo': '/path/to/arepo',
+    \'anotherrepo': '~/path/to/anotherrepo',}
+```
+
 To ignore case in searches by default:
 
 ```vimscript
