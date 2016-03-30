@@ -49,6 +49,8 @@ dictionary like so:
     \'anotherrepo': '~/path/to/anotherrepo',}
 ```
 
+This dictionary is required in order to use the `HoundQF` command.
+
 To ignore case in searches by default:
 
 ```vimscript
