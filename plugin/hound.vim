@@ -79,11 +79,11 @@ function! hound#getRepoBasePath(repo_name)
     return ""
 endfunction
 
-function! QHound(...) abort
+function! HoundQF(...) abort
     let query_string = join(a:000)
 
     if empty('g:hound_repo_paths')
-        echo "You must set g:hound_repo_paths in your vimrc to use QHound"
+        echo "You must set g:hound_repo_paths in your vimrc to use HoundQF"
         return
     endif
 
@@ -194,4 +194,4 @@ function! Hound(...) abort
 endfunction
 
 command! -nargs=1 Hound call Hound(<f-args>)
-command! -nargs=1 QHound call QHound(<f-args>)
+command! -nargs=1 HoundQF call HoundQF(<f-args>)

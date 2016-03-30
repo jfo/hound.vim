@@ -33,7 +33,7 @@ Or like this: >
 
 You can also get the results in a quickfix window by running: >
 
-    :QHound foo
+    :HoundQF foo
 
 QFEnter and vim-unimpaired are useful plugins that will make
 quickfix windows easier to work with.
@@ -78,7 +78,7 @@ To search the token under your cursor you can do something like: >
 
 or
 
- nnoremap <C-h> :QHound<space><C-R><C-W>
+ nnoremap <C-h> :HoundQF<space><C-R><C-W>
 
 =============================================================================
 4. Contributing                                           *HoundContributing*

@@ -26,7 +26,7 @@ command, which takes a string and asks a hound server: "like hey what's up with 
 
 You can also get the results in a quickfix window by running
 ```
-QHound <searchterm>
+HoundQF <searchterm>
 ```
 
 hound.vim assumes you have a server running on localhost at port 6080. If you want to hit somewhere else you can redefine either in your .vimrc:
