@@ -69,8 +69,6 @@ If you want a vertical split instead of a new window:
 let g:hound_vertical_split = 1
 ```
 
-This is a beta release. Please let me know of any bugs! There will be bugs! More docs and features and options to come.
-
 Doge
 ------
 <img src="https://i.imgflip.com/hoo6z.jpg" alt="dogehound" style="width: 200px;"/>

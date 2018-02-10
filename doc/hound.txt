@@ -84,4 +84,4 @@ or
 4. Contributing                                           *HoundContributing*
 
 Please report issues, feature requests and pull requests to
-https://github.com/urthbound/hound.vim
+https://github.com/jfo/hound.vim
