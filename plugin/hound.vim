@@ -48,7 +48,7 @@ endfunction
 function! hound#fetchResults(query_string, clean_repos)
     let sanitized_query_string = hound#encodeUrl(a:query_string)
 
-    let clean_repos = substitute(tolower(g:hound_repos), " ","","g")
+    let clean_repos = substitute(g:hound_repos, " ","","g")
 
     let s:api_full_url = g:hound_base_url
                 \. ":" . g:hound_port
@@ -87,7 +87,7 @@ function! HoundQF(...) abort
         return
     endif
 
-    let clean_repos = substitute(tolower(join(keys(g:hound_repo_paths), ',')), " ","","g")
+    let clean_repos = substitute(join(keys(g:hound_repo_paths), ','), " ","","g")
 
     try
         let response = hound#fetchResults(query_string, clean_repos)
@@ -128,7 +128,7 @@ endfunction
 function! Hound(...) abort
 
     let query_string = join(a:000)
-    let clean_repos = substitute(tolower(g:hound_repos), " ","","g")
+    let clean_repos = substitute(g:hound_repos, " ","","g")
 
     try
         let response = hound#fetchResults(query_string, clean_repos)
