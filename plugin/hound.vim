@@ -26,6 +26,10 @@ if !exists('g:hound_vertical_split')
     let g:hound_vertical_split=0
 endif
 
+if !exists('g:hound_preserve_repo_case')
+    let g:hound_preserve_repo_case=0
+endif
+
 if !exists('g:hound_ignore_case')
     let g:hound_ignore_case=0
 endif
@@ -48,7 +52,11 @@ endfunction
 function! hound#fetchResults(query_string, clean_repos)
     let sanitized_query_string = hound#encodeUrl(a:query_string)
 
-    let clean_repos = substitute(g:hound_repos, " ","","g")
+    if g:hound_preserve_repo_case
+      let clean_repos = substitute(g:hound_repos, " ","","g")
+    else
+      let clean_repos = substitute(tolower(g:hound_repos), " ","","g")
+    endif
 
     let s:api_full_url = g:hound_base_url
                 \. ":" . g:hound_port
@@ -87,7 +95,11 @@ function! HoundQF(...) abort
         return
     endif
 
-    let clean_repos = substitute(join(keys(g:hound_repo_paths), ','), " ","","g")
+    if g:hound_preserve_repo_case
+      let clean_repos = substitute(join(keys(g:hound_repo_paths), ','), " ","","g")
+    else
+      let clean_repos = substitute(tolower(join(keys(g:hound_repo_paths), ',')), " ","","g")
+    endif
 
     try
         let response = hound#fetchResults(query_string, clean_repos)
@@ -128,7 +140,12 @@ endfunction
 function! Hound(...) abort
 
     let query_string = join(a:000)
-    let clean_repos = substitute(g:hound_repos, " ","","g")
+
+    if g:hound_preserve_repo_case
+      let clean_repos = substitute(g:hound_repos, " ","","g")
+    else
+      let clean_repos = substitute(tolower(g:hound_repos), " ","","g")
+    endif
 
     try
         let response = hound#fetchResults(query_string, clean_repos)
