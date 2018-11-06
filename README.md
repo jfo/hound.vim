@@ -49,6 +49,12 @@ dictionary like so:
     \'anotherrepo': '~/path/to/anotherrepo',}
 ```
 
+If your repos have uppercase letters, please specify them with capitals in `g:hound_repos` and `g:hound_repo_paths`, and set:
+
+```vimscript
+let g:hound_preserve_repo_case = 1
+```
+
 This dictionary is required in order to use the `HoundQF` command.
 
 To ignore case in searches by default:
