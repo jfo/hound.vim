@@ -1,3 +1,5 @@
+Note: this project isn't actively developed since I no longer use hound regularly, but I will happily respond to issues or pull requests. Further, if someone who still uses hound and vim wants to take over maintainance lmk and I'll give it a think.
+
 hound.vim
 =========
 
